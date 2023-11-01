@@ -1,0 +1,35 @@
+name: Scrape Chelsea Site and Send News
+
+on:
+  schedule:
+    - cron: "0 */5 * * *"
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+        working-directory: ./path-to-your-code
+
+      - name: Run scraping and send news
+        run: |
+          python your_scraping_script.py
+        working-directory: ./path-to-your-code
+
+      - name: Commit and push changes
+        run: |
+          git config user.name 'Your Name'
+          git config user.email 'youremail@example.com'
+          git commit -am "Update log file" && git push
+        working-directory: ./path-to-your-code
